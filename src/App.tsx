@@ -9,6 +9,7 @@ import {
   IonTabButton,
   IonTabs
 } from '@ionic/react';
+import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import { IonReactRouter } from '@ionic/react-router';
 import { home, wifi, settings} from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
@@ -39,21 +40,21 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route path="/tab1" component={Tab1} exact={true} />
-          <Route path="/tab2" component={Tab2} exact={true} />
-          <Route path="/tab3" component={Tab3} />
-          <Route path="/" render={() => <Redirect to="/tab1" />} exact={true} />
+          <Route path="/home" component={Tab1} exact={true} />
+          <Route path="/shorturls" component={Tab2} exact={true} />
+          <Route path="/settings" component={Tab3} />
+          <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/tab1">
+          <IonTabButton tab="tab1" href="/home">
             <IonIcon icon={home} />
             <IonLabel>Home</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
+          <IonTabButton tab="tab2" href="/shorturls">
             <IonIcon icon={wifi} />
             <IonLabel>ShortURLs</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
+          <IonTabButton tab="tab3" href="/settings">
             <IonIcon icon={settings} />
             <IonLabel>Einstellungen</IonLabel>
           </IonTabButton>
@@ -63,4 +64,4 @@ const App: React.FC = () => (
   </IonApp>
 );
 
-export default App;
+export default withAuthenticator (App);

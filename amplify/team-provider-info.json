@@ -10,6 +10,11 @@
       "StackName": "amplify-meingd-dev-222128",
       "StackId": "arn:aws:cloudformation:eu-west-1:104873567433:stack/amplify-meingd-dev-222128/89b41520-f9ec-11ea-9951-06ec82b2a98c",
       "AmplifyAppId": "d1ejfxhgdlxk25"
+    },
+    "categories": {
+      "auth": {
+        "meingd05fac12e": {}
+      }
     }
   }
 }

@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "meingd423997bc_identitypool_423997bc",
+    "identityPoolName": "meingd05fac12e_identitypool_05fac12e",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "meingd423997bc",
-    "userPoolName": "meingd423997bc_userpool_423997bc",
+    "resourceNameTruncated": "meingd05fac12e",
+    "userPoolName": "meingd05fac12e_userpool_05fac12e",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "meingd423997bc_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "meingd05fac12e_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "423997bc",
-    "resourceName": "meingd423997bc",
+    "sharedId": "05fac12e",
+    "resourceName": "meingd05fac12e",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -45,12 +45,10 @@
             "Arn"
         ]
     },
-    "useDefault": "defaultSocial",
-    "hostedUI": true,
-    "hostedUIDomainName": "meingd423997bc-423997bc",
-    "authProvidersUserPool": [],
-    "hostedUIProviderMeta": "[]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://meingd.de/signin/\"],\"LogoutURLs\":[\"https://meingd.de/signout/\"]}",
+    "useDefault": "default",
+    "usernameAttributes": [
+        "email"
+    ],
     "userPoolGroupList": [],
     "dependsOn": []
 }

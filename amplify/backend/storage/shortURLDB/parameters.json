@@ -1,0 +1,7 @@
+{
+    "tableName": "shortURLDB",
+    "partitionKeyName": "userID",
+    "partitionKeyType": "S",
+    "sortKeyName": "shortURL",
+    "sortKeyType": "S"
+}
