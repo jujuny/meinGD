@@ -2,9 +2,20 @@ import React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Logout.css';
+import { Auth } from 'aws-amplify';
+import { sign } from 'crypto';
+
+async function signOut() {
+    try {
+        await Auth.signOut();
+    } catch (error) {
+        console.log('error signing out: ', error);
+    }
+}
 
 const Logout: React.FC = () => {
-  return (
+    signOut(); 
+    return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
