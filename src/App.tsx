@@ -9,12 +9,13 @@ import {
   IonTabButton,
   IonTabs
 } from '@ionic/react';
-import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
+import { withAuthenticator, AmplifySignOut,AmplifyAuthenticator } from "@aws-amplify/ui-react";
 import { IonReactRouter } from '@ionic/react-router';
 import { home, wifi, settings} from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
+import Logout from './pages/Logout'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -38,6 +39,30 @@ import awsconfig from './aws-exports';
 import './theme/variables.css';
 Amplify.configure(awsconfig);
 
+const signUpConfig = {
+  header: 'Registrierung für meinGD',
+  hideAllDefaults: true,
+  defaultCountryCode: '49',
+  signUpFields: [
+
+    {
+      label: 'Passwort',
+      key: 'password',
+      required: true,
+      displayOrder: 2,
+      type: 'password'
+    },
+
+    {
+      label: 'Email',
+      key: 'email',
+      required: true,
+      displayOrder: 1,
+      type: 'string'
+    }
+  ]
+};
+
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
@@ -46,8 +71,10 @@ const App: React.FC = () => (
           <Route path="/home" component={Tab1} exact={true} />
           <Route path="/shorturls" component={Tab2} exact={true} />
           <Route path="/settings" component={Tab3} />
+          <Route path="/logout" component={Logout} />
           <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
         </IonRouterOutlet>
+        <AmplifyAuthenticator usernameAlias="email"></AmplifyAuthenticator>
         <IonTabBar slot="bottom">
           <IonTabButton tab="tab1" href="/home">
             <IonIcon icon={home} />
@@ -61,10 +88,15 @@ const App: React.FC = () => (
             <IonIcon icon={settings} />
             <IonLabel>Einstellungen</IonLabel>
           </IonTabButton>
+          <IonTabButton tab="logout" href="/logout">
+            <IonIcon icon={home} />
+            <IonLabel>Logout</IonLabel>
+          </IonTabButton>
         </IonTabBar>
       </IonTabs>
     </IonReactRouter>
   </IonApp>
 );
+
 
 export default withAuthenticator (App);
