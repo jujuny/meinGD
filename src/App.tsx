@@ -31,9 +31,12 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
+import Amplify from 'aws-amplify';
+import awsconfig from './aws-exports';
 
 /* Theme variables */
 import './theme/variables.css';
+Amplify.configure(awsconfig);
 
 const App: React.FC = () => (
   <IonApp>
