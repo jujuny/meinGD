@@ -1,9 +1,9 @@
 {
   "name": "meinGD",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "dependencies": {
-    "@aws-amplify/ui-react": "^0.2.23",
+    "@aws-amplify/ui-react": "^0.2.24",
     "@ionic/react": "^5.0.7",
     "@ionic/react-router": "^5.0.7",
     "@react-native-community/netinfo": "^5.9.7",
@@ -47,5 +47,5 @@
       "last 1 safari version"
     ]
   },
-  "description": "An Ionic project"
+  "description": "meinGD project"
 }
