@@ -4,6 +4,7 @@ import ExploreContainer from '../components/ExploreContainer';
 import './Logout.css';
 import { Auth } from 'aws-amplify';
 import { sign } from 'crypto';
+import App from '../App';
 
 async function signOut() {
     try {

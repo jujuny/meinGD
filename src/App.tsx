@@ -9,9 +9,9 @@ import {
   IonTabButton,
   IonTabs
 } from '@ionic/react';
-import { withAuthenticator, AmplifySignOut,AmplifyAuthenticator } from "@aws-amplify/ui-react";
+import { withAuthenticator, AmplifySignOut,AmplifyAuthenticator, AmplifySignUp, AmplifySignIn } from "@aws-amplify/ui-react";
 import { IonReactRouter } from '@ionic/react-router';
-import { home, wifi, settings} from 'ionicons/icons';
+import { home, wifi, settings, library, exit} from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -34,10 +34,19 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 import Amplify from 'aws-amplify';
 import awsconfig from './aws-exports';
+import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
+
+import { I18n } from '@aws-amplify/core';
+
+import { strings } from './strings';
+import { Translations } from "@aws-amplify/ui-components";
+
 
 /* Theme variables */
 import './theme/variables.css';
 Amplify.configure(awsconfig);
+
+I18n.putVocabularies(strings);
 
 const signUpConfig = {
   header: 'Registrierung für meinGD',
@@ -63,40 +72,75 @@ const signUpConfig = {
   ]
 };
 
-const App: React.FC = () => (
+const App: React.FunctionComponent = () => {
+  const [authState, setAuthState] = React.useState<AuthState>();
+  const [user, setUser] = React.useState<object | undefined>();
+
+  React.useEffect(() => {
+      return onAuthUIStateChange((nextAuthState, authData) => {
+          setAuthState(nextAuthState);
+          setUser(authData)
+      });
+  }, []);
+
+return authState === AuthState.SignedIn && user ? (
   <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route path="/home" component={Tab1} exact={true} />
-          <Route path="/shorturls" component={Tab2} exact={true} />
-          <Route path="/settings" component={Tab3} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/" render={() => <Redirect to="/home" />} exact={true} />
-        </IonRouterOutlet>
-        <AmplifyAuthenticator usernameAlias="email"></AmplifyAuthenticator>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/home">
-            <IonIcon icon={home} />
-            <IonLabel>Home</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab2" href="/shorturls">
-            <IonIcon icon={wifi} />
-            <IonLabel>ShortURLs</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab3" href="/settings">
-            <IonIcon icon={settings} />
-            <IonLabel>Einstellungen</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="logout" href="/logout">
-            <IonIcon icon={home} />
-            <IonLabel>Logout</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
+  <IonReactRouter>
+    <IonTabs>
+      <IonRouterOutlet>
+        <Route path="/help" component={Tab1} exact={true} />
+        <Route path="/shorturls" component={Tab2} exact={true} />
+        <Route path="/settings" component={Tab3} />
+        <Route path="/logout" component={Logout} />
+        <Route path="/" render={() => <Redirect to="/shorturls" />} exact={true} />
+      </IonRouterOutlet>
+      <AmplifyAuthenticator usernameAlias="email"></AmplifyAuthenticator>
+      <IonTabBar slot="bottom">
+    
+        <IonTabButton tab="tab2" href="/shorturls">
+          <IonIcon icon={wifi} />
+          <IonLabel>ShortURLs</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="tab3" href="/settings">
+          <IonIcon icon={settings} />
+          <IonLabel>Einstellungen</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="tab1" href="/help">
+          <IonIcon icon={library} />
+          <IonLabel>Hilfe</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="logout" href="/logout">
+          <IonIcon icon={exit} />
+          <IonLabel>Abmelden</IonLabel>
+        </IonTabButton>
+      </IonTabBar>
+    </IonTabs>
+  </IonReactRouter>
+</IonApp>
+) : (
+  <AmplifyAuthenticator usernameAlias="email">
+       <AmplifySignUp
+        slot="sign-up"
+        usernameAlias="email"
+        formFields={[
+          {
+            type: "email",
+            label: "E-Mail",
+            placeholder: "eMail",
+            required: true,
+          },
+          {
+            type: "password",
+            label: "Passwort",
+            placeholder: "password",
+            required: true,
+          },
+          
+        ]} 
+      />
+      <AmplifySignIn slot="sign-in" usernameAlias="email" />
+      </AmplifyAuthenticator>
 );
+}
 
-
-export default withAuthenticator (App);
+export default App;
